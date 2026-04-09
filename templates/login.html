@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}Login - AI Medical Tool{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-wrap {
+        min-height: calc(100vh - 40px);
+        display: grid;
+        place-items: center;
+    }
+
+    .auth-shell {
+        width: min(920px, 100%);
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 18px;
+    }
+
+    .auth-brand {
+        border-radius: 22px;
+        background: linear-gradient(150deg, rgba(9, 26, 28, 0.88), rgba(3, 11, 19, 0.78));
+        border: 1px solid rgba(0, 255, 213, 0.35);
+        box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
+        padding: 38px 30px;
+        color: #eafffb;
+    }
+
+    .auth-kicker {
+        display: inline-block;
+        border: 1px solid rgba(0, 255, 213, 0.5);
+        border-radius: 999px;
+        padding: 5px 10px;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #7fffe8;
+        margin-bottom: 16px;
+    }
+
+    .auth-brand h1 {
+        margin: 0;
+        line-height: 1.1;
+        font-size: clamp(1.7rem, 2.2vw, 2.3rem);
+        color: #f1fffd;
+    }
+
+    .auth-brand p {
+        margin: 14px 0 0;
+        color: #c2dfdb;
+        line-height: 1.6;
+    }
+
+    .auth-points {
+        margin: 24px 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+    }
+
+    .auth-points li {
+        padding: 10px 12px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #d7efeb;
+        font-size: 0.94rem;
+    }
+
+    .auth-card {
+        border-radius: 22px;
+        background: rgba(0, 0, 0, 0.42);
+        border: 2px solid rgba(0, 255, 213, 0.62);
+        box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36), 0 0 24px rgba(0, 255, 213, 0.25);
+        backdrop-filter: blur(14px);
+        padding: 30px;
+    }
+
+    .auth-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 18px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgba(0, 255, 213, 0.25);
+    }
+
+    .auth-tab {
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 11px 14px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #e7f9f6;
+        background: rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .auth-tab:hover {
+        background: rgba(0, 255, 213, 0.18);
+        border-color: rgba(0, 255, 213, 0.35);
+    }
+
+    .auth-tab.active {
+        background: linear-gradient(90deg, rgba(0, 255, 213, 0.3), rgba(0, 191, 165, 0.32));
+        border-color: rgba(0, 255, 213, 0.8);
+        color: #ffffff;
+    }
+
+    .auth-form-title {
+        color: #ffffff;
+        margin: 0 0 16px;
+        font-size: 1.2rem;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 7px;
+        color: #d8f9f2;
+        font-size: 0.92rem;
+        font-weight: 500;
+    }
+
+    .auth-input {
+        width: 100%;
+        padding: 12px 13px;
+        box-sizing: border-box;
+        border-radius: 11px;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        background: rgba(255, 255, 255, 0.14);
+        color: #ffffff;
+        outline: none;
+        transition: all 0.2s ease;
+    }
+
+    .auth-input::placeholder {
+        color: #d5dddf;
+    }
+
+    .auth-input:focus {
+        border-color: rgba(0, 255, 213, 0.9);
+        box-shadow: 0 0 0 3px rgba(0, 255, 213, 0.2);
+    }
+
+    .auth-submit {
+        width: 100%;
+        margin-top: 6px;
+        padding: 12px 20px;
+    }
+
+    #signup-form {
+        display: none;
+    }
+
+    @media (max-width: 900px) {
+        .auth-wrap {
+            min-height: auto;
+            padding: 20px 0;
+        }
+
+        .auth-shell {
+            grid-template-columns: 1fr;
+        }
+
+        .auth-brand {
+            padding: 26px 22px;
+        }
+
+        .auth-card {
+            padding: 22px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrap">
+    <div class="auth-shell">
+        <section class="auth-brand">
+            <span class="auth-kicker">Intelligent Care Platform</span>
+            <h1>AI Medical Diagnosis and Training Tool</h1>
+            <p>
+                Access diagnostic workflows, training quizzes, and your records from one secure account.
+            </p>
+            <ul class="auth-points">
+                <li>Machine-learning assisted risk prediction</li>
+                <li>Personalized training and score tracking</li>
+                <li>Secure authentication with hashed passwords</li>
+            </ul>
+        </section>
+
+        <section class="auth-card">
+            <div class="auth-tabs">
+                <button type="button" onclick="showTab('login')" id="login-tab" class="auth-tab active">Login</button>
+                <button type="button" onclick="showTab('signup')" id="signup-tab" class="auth-tab">Sign up</button>
+            </div>
+
+            <div id="login-form">
+                <h2 class="auth-form-title">Welcome back</h2>
+                <form method="POST" action="{{ url_for('login') }}">
+                    <input type="hidden" name="login" value="1">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input id="login-email" class="auth-input" type="email" name="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input id="login-password" class="auth-input" type="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn auth-submit">Sign in</button>
+                </form>
+            </div>
+
+            <div id="signup-form">
+                <h2 class="auth-form-title">Create your account</h2>
+                <form method="POST" action="{{ url_for('login') }}">
+                    <input type="hidden" name="signup" value="1">
+                    <div class="form-group">
+                        <label for="signup-name">Full name</label>
+                        <input id="signup-name" class="auth-input" type="text" name="name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input id="signup-email" class="auth-input" type="email" name="email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input id="signup-password" class="auth-input" type="password" name="password" placeholder="Create a password" required>
+                    </div>
+                    <button type="submit" class="btn auth-submit">Sign up</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function showTab(tab) {
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const loginTab = document.getElementById('login-tab');
+    const signupTab = document.getElementById('signup-tab');
+
+    if (tab === 'login') {
+        loginForm.style.display = 'block';
+        signupForm.style.display = 'none';
+        loginTab.classList.add('active');
+        signupTab.classList.remove('active');
+    } else {
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'block';
+        signupTab.classList.add('active');
+        loginTab.classList.remove('active');
+    }
+}
+</script>
+{% endblock %}
+
